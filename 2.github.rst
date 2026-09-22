@@ -1,0 +1,373 @@
+Lesson 2: GitHub and Git usage
+==============================
+
+In this workshop, we will learn how to use Git and GitHub for version control and collaboration in general. In the end, we will go through how to use GitHub to submit your homework for this class.
+
+
+Local repository vs remote repository
+-------------------------------------
+
+1. A local repository is nothing fancier than a folder on your computer that contains codes with changes tracked by ``git``.
+
+   .. note::
+
+      ``git`` is a *version control system* that allows you to track changes to the files ("commits"), and maintain different versions of your code ("branches").
+
+      ``git`` contains many useful commands to help you manage different versions of your files, so that you can easily compare, switch between and even merge them.
+
+   Navigate to your course materials folder. Since you used ``git clone`` to download the folder, it is already a local repository. You can check this by running the following command:
+
+   .. code-block:: bash
+
+      cd ChE150/ChE150_2026
+      git status                 # check the status of your local repository
+
+   You should see a message that says "On branch main" and "nothing to commit, working tree clean".
+
+2. A remote repository is a version of your project hosted on a drive on the Internet.
+
+   The most popular hosting service is `GitHub`_, which allows you to share your code with others, and collaborate on projects.
+
+   You can find the remote repository for this class at https://github.com/kdfong/ChE150_2026.git. Navigate to this URL in your web browser.
+
+   The remote repo looks kind of like a Google Drive folder, but:
+
+   - It is designed to version control source code (basically text files), so you don't need large storage space.
+   - You can't easily upload files, instead you will need to use ``git`` commands.
+   - You can easily see the ``branches``, ``commits``, and ``pull requests`` of the project.
+
+   You can see mostly the same files as in your local repository, but note that they have been updated since you cloned the repository last week.
+
+   .. warning::
+
+      This is because your local repository is NOT automatically synced with the remote repository. You will need to manually check for updates.
+
+
+Sync your local repository with the remote repository
+-----------------------------------------------------
+
+1. Change your current directory to the course materials folder:
+
+   .. code-block:: bash
+
+      cd ChE150/ChE150_2026
+
+2. Check for updates in the remote repository:
+
+   .. code-block:: bash
+
+      git fetch
+      git status                 # check the status of your local repository
+
+   .. note::
+
+      You should see a message that says "Your branch is behind 'origin/main' by X commits". This means that there have been X changes made to the remote repository since you cloned it.
+
+   To update your local repository with the changes from the remote repository, run the following command:
+
+   .. code-block:: bash
+
+      git pull
+
+
+Making changes and commits
+--------------------------
+
+Git makes it easy to track changes to your repositories. It also encourages you to make incremental and mindful changes.
+
+We first learn how to add a new file to the current repository.
+
+1. In the ``ChE150_2026/workshop_2`` folder, create a new file with ``<your name>.txt``
+
+   .. code-block:: bash
+
+      touch <your name>.txt
+
+2. Add some brief self-introduction in the file. You can use any text editor to edit the file, for example:
+
+   .. code-block:: bash
+
+      nano <your name>.txt
+      # or
+      code <your name>.txt
+
+3. Save the file.
+
+4. Check the status of your local repository:
+
+   .. code-block:: bash
+
+      git status
+
+   You should see that the new file is listed as "untracked".
+
+   .. admonition:: In VS Code
+      :class: tip
+
+      You can also open your VS Code and go to the Source Control tab to see the new file having a "U" icon next to it, which means it is untracked.
+
+   .. note::
+
+      "Untracked" means that the file exists in your local folder, but ``git`` is not cataloging it yet.
+
+      Untracked files will not be committed and will not be uploaded to the remote repo.
+
+5. Add the new file to the staging area:
+
+   .. code-block:: bash
+
+      git add <your name>.txt
+      git status                 # check the status of your local repository again
+
+   You should see that the new file is now listed as "new file: <your name>.txt".
+
+   .. admonition:: In VS Code
+      :class: tip
+
+      In VS Code's Source Control, you will see the new file having an "A" icon next to it under "Staged Changes".
+
+   .. note::
+
+      Staged changes will be commited with the next ``git commit`` command.
+
+Now, we try to make a change to an existing file in the repository.
+
+1. Open the existing file ``ChE150_2026/workshop_2/self_intro`` in your text editor.
+
+2. Add a new line to the file, containing your name and a brief self-introduction. Save the file.
+
+3. Check the status of your local repository:
+
+   .. code-block:: bash
+
+      git status
+
+   You should see that the file is listed as "modified" under "Changes not staged for commit".
+
+   .. admonition:: In VS Code
+      :class: tip
+
+      In VS Code's Source Control, you will see "self_intro" having an "M" icon next to it, which means it is modified.
+
+   To stage the changes, run the following command:
+
+   .. code-block:: bash
+
+      git add self_intro
+      git status                 # check the status of your local repository again
+
+   You should see that the file is now listed as "modified" under "Changes to be committed".
+
+   .. admonition:: In VS Code
+      :class: tip
+
+      In VS Code's Source Control, you will see "self_intro" moved to the "Staged Changes" section with an "M" icon next to it.
+
+4. Commit the changes to your local repository:
+
+   .. code-block:: bash
+
+      git commit -m "Add self-introduction for <your name>"
+      git status                 # check the status of your local repository again
+
+   You should see that there are no changes to be committed, and your working tree is clean.
+
+
+Pushing changes to the remote repository
+----------------------------------------
+
+1. Try to push your changes to the remote repository:
+
+   .. code-block:: bash
+
+      git push
+
+   .. note::
+
+      You may be prompted to enter your GitHub username and password. You may need to use a personal access token instead of your password.
+
+2. You may see an error message saying "Updates were rejected because the remote contains work that you do not have locally."
+
+   .. warning::
+
+      This is expected because all of you are pushing conflicting changes to the same file at the same time!
+
+      This is called a "merge conflict", and happens a lot when you are collaborating with others.
+
+
+Interactive Activity: Creating branches and pull requests
+---------------------------------------------------------
+
+Many codebases use branch protection to prevent direct pushes to ``main``. Instead you will need to create a working branch and a pull request.
+
+1. Reset your last local commit:
+
+   .. code-block:: bash
+
+      git reset --soft HEAD~1
+
+   This will undo the last commit, but keep your changes in the working directory.
+
+2. Create a new branch for your changes:
+
+   .. code-block:: bash
+
+      # this will create a new branch called <your name> and migrate your changes to that branch
+      git checkout -b <your name>
+
+      # commit your changes to the new branch instead
+      git commit -m "Add self-introduction for <your name>"
+
+   .. note::
+
+      A branch allows you to work on a separate version of your project without affecting the working main version.
+
+      Usually, a branch is created for a specific purpose, like one new feature or one bug fix.
+
+3. Push your branch to the remote repository:
+
+   .. code-block:: bash
+
+      git push --set-upstream origin <your name>
+
+4. Go to the remote repository in your web browser
+
+   You should see a message saying "Your recently pushed branches: <your name>". Click on "Compare & pull request".
+
+5. You will be taken to a page where you can create a pull request.
+
+   .. note::
+
+      A pull request is requesting a reviewer to "pull" your changes onto the main branch.
+
+      You can see each other's changes, and leave comments on the changes.
+
+6. Now, take turns reviewing and approving each other's pull requests. Once approved, you can merge the pull request to the main branch.
+
+   It may say "This branch has conflicts that must be resolved".
+
+   a. Click on "Resolve conflicts" to manually resolve the conflicts.
+   b. Select "Keep Both" so that your classmate's changes are piled on top of the previous one.
+   c. Then click "Mark as resolved" and "Commit merge".
+   d. Finally, click "Merge pull request" to merge the changes to the main branch.
+
+
+What is a merge conflict and when do they happen?
+-------------------------------------------------
+
+A merge conflict is when more than two different changes are made to the same lines of the same file, and you try to overwrite one with the other.
+
+Git doesn't know which is the correct version, so it will ask you to resolve the conflict manually.
+
+A merge conflict can happen during:
+
+``git pull``
+   When the remote repository has changed, and you have made conflicting local changes. ``git`` doesn't know which version to keep on your local repository.
+
+``git push``
+   When the remote repository has changed, and you want to update the remote repo with your local changes. ``git`` doesn't know which version to keep on the remote repository.
+
+``git merge``
+   When you are merging two branches, and both branches have conflicting changes. ``git`` doesn't know which version to keep in the merged branch.
+
+.. tip::
+
+   To minimize merge conflicts, it is best to communicate with your collaborators and make sure that you are not working on the same files at the same time.
+
+
+Other useful ``git`` commands
+-----------------------------
+
+``git log``
+   Shows the commit history of the current branch. It contains the commit hash of past commits, which looks like ``commit 3410bb7af7ba2cdaa5b2c9963e453ecccc27dfe7`` for the initial commit of this repo.
+
+   .. admonition:: In VS Code
+      :class: tip
+
+      You can also see this under the "GRAPH" section in VS Code's Source Control tab.
+
+``git checkout <commit-id>``
+   Switches to a specific commit in the history. ``<commit-id>`` can be the first few characters of the commit hash (e.g. ``git checkout 3410`` to checkout the initial commit).
+
+   .. code-block:: bash
+
+      git checkout <branch-name>                   # to switch to a different branch
+      git checkout v1.0                            # to switch to a release version
+      git checkout <branch-name> -- <file-name>    # to checkout a specific file from a different branch
+
+   .. admonition:: In VS Code
+      :class: tip
+
+      You can do this in VS Code by right clicking on a commit in the "GRAPH" section and selecting "Checkout (detached)".
+
+``git diff <commit1-id> <commit2-id>``
+   Shows the differences between two commits.
+
+``git stash``
+   Temporarily saves your changes without committing them. ``git stash pop`` restores the changes later.
+
+   .. note::
+
+      This is extremely useful when you want to switch branches but have uncommitted changes you don't want to lose.
+
+``git merge <branch-name>``
+   Merges the changes from another branch into the current branch. You may need to resolve conflicts if there are any.
+
+
+Submitting your homework
+------------------------
+1. Create a new folder for your all your homework
+
+   .. code-block:: bash
+
+      mkdir ChE150_2026/homework
+      cd ChE150_2026/homework
+
+3. Turn your folder into a git repository and add your personal repository as the origin. In the terminal, run the following command:
+
+   .. code-block:: bash
+
+      git init
+      git remote add origin https://github.com/caltech-che150-2026/<your-name>.git
+
+5. Confirm that your remotes are set up correctly. In the terminal, run the following command:
+
+   .. code-block:: bash
+
+      git remote -v
+
+   You should see something like this:
+   
+   .. code-block:: bash
+
+      origin  https://github.com/caltech-che150-2026/<your-name>.git (fetch)
+      origin  https://github.com/caltech-che150-2026/<your-name>.git (push)
+
+6. Create a subfolder and notebook for each homework assignment. Make sure to do you homework in the folder for that assignment.
+
+   .. code-block:: bash
+
+      mkdir HW1
+      touch HW1/HW1.ipynb
+      code HW1/HW1.ipynb
+
+7. When you are doing your homework, we recommend commiting changes as you go, so that you can easily revert to a previous version if you make a mistake. 
+
+   .. code-block:: bash
+
+      # You have finished problem 1 in HW1.ipynb and it works
+      git add    HW1/HW1.ipynb      # add the file to the staging area
+      git commit -m "problem 1 finished"      # commit the changes with a message
+
+7. After you finish your homework, hit "Restart" and then "Run All" to make sure your code runs correctly, then push your changes to your personal repository:
+
+   .. code-block:: bash
+
+      git push
+   
+
+
+.. _official website: https://code.visualstudio.com/
+.. _git website: https://git-scm.com/
+.. _GitHub: https://github.com/
+.. _class organization: https://github.com/caltech-che150-2026

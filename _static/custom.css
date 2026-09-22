@@ -1,0 +1,17 @@
+/* Page titles and all section headings: bold Helvetica */
+.rst-content h1,
+.rst-content h2,
+.rst-content h3,
+.rst-content h4,
+.rst-content h5,
+.rst-content h6 {
+    font-family: Helvetica, "Helvetica Neue", Arial, sans-serif;
+    font-weight: 700;
+}
+
+/* Sidebar toctree captions (the :caption: text): bold Helvetica */
+.wy-menu-vertical .caption,
+.wy-menu-vertical p.caption {
+    font-family: Helvetica, "Helvetica Neue", Arial, sans-serif;
+    font-weight: 700;
+}

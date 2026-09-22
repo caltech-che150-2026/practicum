@@ -1,0 +1,14 @@
+Lesson 3: Performance in Python
+===============================
+
+In this workshop, we will learn about the basics of performance in Python, especially for numerical methods.
+
+Please refer to performance.ipynb in practicum/workshop_3 for the interactive notebook.
+
+
+
+Show: CLI, VSCode, Github website
+
+.. _official website: https://code.visualstudio.com/
+.. _git website: https://git-scm.com/
+.. _GitHub: https://github.com/

@@ -1,0 +1,169 @@
+Lesson 1: Python environment
+============================
+
+In this first workshop, we will set up the software environment for the class.
+You may have already have some or all of the softwares installed
+
+
+Configure Visual Studio Code (VS Code)
+--------------------------------------
+
+1. Download and install VS Code from the `official website`_
+
+2. Install ``Jupyter`` and ``python`` extensions for VS Code
+
+   - Search for "Jupyter" and "python" in the VS Code extension marketplace and install
+
+Why use VS Code?
+~~~~~~~~~~~~~~~~
+
+- VS Code is widely used in professional code development, representing over 75% the userbase on Stack Overflow in 2026 (https://survey.stackoverflow.co/2025/)
+- VS Code supports coding and debugging in most languages, officially maintained by Microsoft
+- VS Code supports many plugins for additional features, including GitHub integration
+- VS Code supports AI chats through Copilot, Claude, Codex, etc., and autocomplete through Copilot
+
+Convenient VS Code Shortcuts
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+For Linux/Windows:
+
+- ``Ctrl + Shift + P``: open command palette
+- ``Ctrl + P``: open file
+- ``Ctrl + Shift + O``: open symbol in file
+- ``Ctrl + /``: comment/uncomment selected line(s)
+- ``Shift + Enter``: run current cell in ``ipynb`` file
+
+For macOS:
+
+- ``Cmd + Shift + P``: open command palette
+- ``Cmd + P``: open file
+- ``Cmd + Shift + O``: open symbol in file
+- ``Cmd + /``: comment/uncomment selected line(s)
+- ``Shift + Enter``: run current cell in ``ipynb`` file
+
+
+Install Anaconda OR Miniconda
+-----------------------------
+
+``conda`` is an environment management system that allows you to install and manage packages for Python and other languages.
+It can create separate environments for different projects, since different projects may require different versions of the same packages.
+
+Anaconda has pre-installed packages, and you can start using the (base) environment right after installation.
+
+.. tip::
+
+   Miniconda is recommended for this class since it only comes with ``conda`` and ``python``. It takes less disk space, and you can learn more through setting up your own environment
+
+
+Installing Git
+--------------
+
+What is Git?
+   - Git is a version control system that allows you to track changes to a project.
+   - Git allows easy collaboration and sharing of code, or really any text-based files
+   - Git allows quick switching between different versions of a project.
+   - Git works offline, but is often used with GitHub, which is a hosting service for Git repositories
+
+We will be using Git to download the course materials, and there will be exercises in the upcoming workshops that require you
+to use Git to collaborate with your classmates.
+
+We recommend installing git AND creating a GitHub account.
+
+- To install git, follow the instructions on the `git website`_.
+- To create a GitHub account, go to `GitHub`_.
+
+
+Recommendations for Windows users
+---------------------------------
+
+In this workshop, we will also introduce some basic command line skills like navigating directories, creating files, and using ``git`` commands.
+
+Windows comes with a native command line interface (CLI) ``cmd`` and Powershell.
+Powershell is the more modern version but both are different from the ``bash`` terminal on macOS and Linux.
+If you have experience with ``cmd``, Powershell or Windows Subsystem for Linux (WSL), you can use them for this class,
+and we trust that you already know what you are doing.
+
+.. note::
+
+   Otherwise, for a unified class experience, we recommend using ``git bash`` on Windows, which is already installed with Git.
+   With ``git bash``, you can use the same commands as macOS and Linux users without extra steps.
+
+You can access ``git bash`` by searching for it in the start menu.
+
+.. admonition:: In VS Code
+   :class: tip
+
+   You can also set it as the default terminal in VS Code:
+
+   - Open VS Code, and press ``Ctrl + Shift + P`` to open the command palette
+   - Search for "Terminal: Select Default Profile" and select ``git bash``
+
+
+Create a new Conda environment for class
+----------------------------------------
+
+1. Make a new folder for the class, and navigate to it in the terminal
+
+   ``mkdir ChE150``
+      make a new folder called ``ChE150`` in ``home`` directory
+
+   ``cd ChE150``
+      change current directory to ``ChE150``
+
+2. Download the course materials from GitHub using the following command:
+
+   .. code-block:: bash
+
+      git clone https://github.com/kdfong/ChE150_2026.git
+
+3. Create a new conda environment for the class using the following command:
+
+   .. code-block:: bash
+
+      conda create --name ChE150
+
+   .. note::
+
+      If ``conda`` command is not found, you may need to expose ``conda`` to your terminal:
+
+      - For macOS/Linux, make sure the following lines is in your ``.bashrc``:
+
+        .. code-block:: bash
+
+           . <install-path>/miniconda3/etc/profile.d/conda.sh
+
+      - For Windows, make sure to create a ``.bashrc`` file in your home directory with the following line
+
+        ``nano .bashrc``
+           create a new file called ``.bashrc`` in your home directory
+
+        Add the following line to the file:
+
+        .. code-block:: bash
+
+           . <install-path>/miniconda3/etc/profile.d/conda.sh
+
+        Save and exit the file ``Ctrl + O`` and ``Ctrl + X``.
+
+4. Activate the new environment using the following command:
+
+   .. code-block:: bash
+
+      conda activate ChE150
+
+   - You can see that the environment ``ChE150`` is being used by typing ``which python`` in the terminal. The output should be something like ``<install-path>/miniconda3/envs/ChE150/bin/python``
+   - This means that you are using a Python environment that is separate from the rest of your system!
+
+5. Install the packages needed for this class
+
+   .. code-block:: bash
+
+      conda install numpy scipy
+
+6. You can open the directory in VS Code by starting VS Code and go to File -> Open Folder, and select the ``ChE150`` folder.
+
+
+
+.. _official website: https://code.visualstudio.com/
+.. _git website: https://git-scm.com/
+.. _GitHub: https://github.com/
