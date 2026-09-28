@@ -104,6 +104,8 @@ Create a new Conda environment for class
 
 1. Make a new folder for the class, and navigate to it in the terminal
 
+   .. code-block:: bash
+
    ``mkdir ChE150``
       make a new folder called ``ChE150`` in ``home`` directory
 
@@ -114,7 +116,7 @@ Create a new Conda environment for class
 
    .. code-block:: bash
 
-      git clone https://github.com/kdfong/ChE150_2026.git
+      git clone https://github.com/caltech-che150-2026/class-materials.git
 
 3. Create a new conda environment for the class using the following command:
 
@@ -158,7 +160,13 @@ Create a new Conda environment for class
 
    .. code-block:: bash
 
-      conda install numpy scipy
+      conda install numpy scipy matplotlib pandas jupyterlab
+   
+   or, you can install the packages using the provided ``environment.yml`` file:
+
+   .. code-block:: bash
+
+      conda env update --file environment.yml
 
 6. You can open the directory in VS Code by starting VS Code and go to File -> Open Folder, and select the ``ChE150`` folder.
 
