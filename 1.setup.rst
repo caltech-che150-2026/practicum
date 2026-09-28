@@ -161,7 +161,8 @@ Create a new Conda environment for class
    .. code-block:: bash
 
       conda install numpy scipy matplotlib pandas jupyterlab
-   
+      conda install -c conda-forge nbstripout   
+      
    or, you can install the packages using the provided ``environment.yml`` file:
 
    .. code-block:: bash

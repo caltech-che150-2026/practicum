@@ -343,7 +343,14 @@ Submitting your homework
       origin  https://github.com/caltech-che150-2026/<your-name>.git (fetch)
       origin  https://github.com/caltech-che150-2026/<your-name>.git (push)
 
-6. Create a subfolder and notebook for each homework assignment. Make sure to do you homework in the folder for that assignment.
+6. Set up ``nbstripout`` to automatically remove outputs from your Jupyter notebooks before committing. Otherwise, ``git`` will track useless changes like Excecution Count.
+   In the terminal, run the following command:
+
+   .. code-block:: bash
+
+      nbstripout --install
+
+7. Create a subfolder and notebook for each homework assignment. Make sure to do you homework in the folder for that assignment.
 
    .. code-block:: bash
 
@@ -351,7 +358,7 @@ Submitting your homework
       touch HW1/HW1.ipynb
       code HW1/HW1.ipynb
 
-7. When you are doing your homework, we recommend commiting changes as you go, so that you can easily revert to a previous version if you make a mistake. 
+8. When you are doing your homework, we recommend commiting changes as you go, so that you can easily revert to a previous version if you make a mistake. 
 
    .. code-block:: bash
 
@@ -359,7 +366,7 @@ Submitting your homework
       git add    HW1/HW1.ipynb      # add the file to the staging area
       git commit -m "problem 1 finished"      # commit the changes with a message
 
-7. After you finish your homework, hit "Restart" and then "Run All" to make sure your code runs correctly, then push your changes to your personal repository:
+9. After you finish your homework, hit "Restart" and then "Run All" to make sure your code runs correctly, then push your changes to your personal repository:
 
    .. code-block:: bash
 
