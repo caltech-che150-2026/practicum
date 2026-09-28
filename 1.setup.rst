@@ -118,6 +118,10 @@ Create a new Conda environment for class
 
       git clone https://github.com/caltech-che150-2026/class-materials.git
 
+   You may be prompted to enter your GitHub username and password. GitHub has replaced passwords with personal access tokens. 
+   Here's how to create a personal access token: `GitHub Personal Access Token`_.
+   After creating the token, copy and paste it to the terminal as the password when prompted.
+
 3. Create a new conda environment for the class using the following command:
 
    .. code-block:: bash
@@ -162,7 +166,7 @@ Create a new Conda environment for class
 
       conda install numpy scipy matplotlib pandas jupyterlab
       conda install -c conda-forge nbstripout   
-      
+
    or, you can install the packages using the provided ``environment.yml`` file:
 
    .. code-block:: bash
@@ -176,3 +180,4 @@ Create a new Conda environment for class
 .. _official website: https://code.visualstudio.com/
 .. _git website: https://git-scm.com/
 .. _GitHub: https://github.com/
+.. _GitHub Personal Access Token: https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic
