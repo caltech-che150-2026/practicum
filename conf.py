@@ -16,7 +16,9 @@ author = 'Boyuan Chen'
 extensions = ['sphinx_rtd_theme', 'sphinx.ext.mathjax']
 
 templates_path = ['_templates']
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', '3.debug.rst']
+exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store',
+                    # unreleased lessons; remove to publish
+                    '2.github.rst', '3.performance.rst', '4.debug.rst']
 
 
 

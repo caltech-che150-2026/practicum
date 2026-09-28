@@ -16,7 +16,8 @@ documentation for details.
    :caption: Contents:
 
    1.setup
+
+.. Unreleased lessons (also excluded in conf.py); add back to the toctree above to publish:
    2.github
    3.performance
    4.debug
-

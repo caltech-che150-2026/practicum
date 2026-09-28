@@ -17,10 +17,10 @@ Configure Visual Studio Code (VS Code)
 Why use VS Code?
 ~~~~~~~~~~~~~~~~
 
-- VS Code is widely used in professional code development, representing over 75% the userbase on Stack Overflow in 2026 (https://survey.stackoverflow.co/2025/)
+- VS Code is widely used in professional code development, representing over 75% the userbase on Stack Overflow in 2025 (https://survey.stackoverflow.co/2025/)
 - VS Code supports coding and debugging in most languages, officially maintained by Microsoft
 - VS Code supports many plugins for additional features, including GitHub integration
-- VS Code supports AI chats through Copilot, Claude, Codex, etc., and autocomplete through Copilot
+- VS Code supports AI chats through Copilot, Claude, Codex, etc., and autocomplete through Copilot (autocomplete is should be turned off for this class)
 
 Convenient VS Code Shortcuts
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -48,9 +48,10 @@ Install Anaconda OR Miniconda
 ``conda`` is an environment management system that allows you to install and manage packages for Python and other languages.
 It can create separate environments for different projects, since different projects may require different versions of the same packages.
 
-Anaconda has pre-installed packages, and you can start using the (base) environment right after installation.
+Go to `conda website`_ to download and install Anaconda or Miniconda.
 
 .. tip::
+   Anaconda has more pre-installed packages.
 
    Miniconda is recommended for this class since it only comes with ``conda`` and ``python``. It takes less disk space, and you can learn more through setting up your own environment
 
@@ -106,11 +107,8 @@ Create a new Conda environment for class
 
    .. code-block:: bash
 
-   ``mkdir ChE150``
-      make a new folder called ``ChE150`` in ``home`` directory
-
-   ``cd ChE150``
-      change current directory to ``ChE150``
+      mkdir ChE150 
+      cd ChE150  
 
 2. Download the course materials from GitHub using the following command:
 
@@ -118,9 +116,12 @@ Create a new Conda environment for class
 
       git clone https://github.com/caltech-che150-2026/class-materials.git
 
-   You may be prompted to enter your GitHub username and password. GitHub has replaced passwords with personal access tokens. 
-   Here's how to create a personal access token: `GitHub Personal Access Token`_.
-   After creating the token, copy and paste it to the terminal as the password when prompted.
+   .. note::
+      You may be prompted to enter your GitHub username and password. GitHub has replaced passwords with personal access tokens. 
+      
+      Here's how to create a personal access token: `GitHub Personal Access Token`_.
+      
+      After creating the token, copy and paste it to the terminal as the password when prompted.
 
 3. Create a new conda environment for the class using the following command:
 
@@ -140,8 +141,9 @@ Create a new Conda environment for class
 
       - For Windows, make sure to create a ``.bashrc`` file in your home directory with the following line
 
-        ``nano .bashrc``
-           create a new file called ``.bashrc`` in your home directory
+        .. code-block:: bash
+
+            nano .bashrc # create a new file called ``.bashrc`` in your home directory
 
         Add the following line to the file:
 
@@ -157,8 +159,19 @@ Create a new Conda environment for class
 
       conda activate ChE150
 
-   - You can see that the environment ``ChE150`` is being used by typing ``which python`` in the terminal. The output should be something like ``<install-path>/miniconda3/envs/ChE150/bin/python``
-   - This means that you are using a Python environment that is separate from the rest of your system!
+   You can see that the environment ``ChE150`` is being used by typing in the terminal:
+   
+   .. code-block:: bash
+
+      which python
+    
+   The output should be something like:
+   
+   .. code-block:: bash
+
+      <install-path>/miniconda3/envs/ChE150/bin/python``
+
+   This means that you are using a Python environment that is separate from the rest of your system!
 
 5. Install the packages needed for this class
 
@@ -181,3 +194,4 @@ Create a new Conda environment for class
 .. _git website: https://git-scm.com/
 .. _GitHub: https://github.com/
 .. _GitHub Personal Access Token: https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic
+.. _conda website: https://www.anaconda.com/download
