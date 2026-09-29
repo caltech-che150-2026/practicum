@@ -169,7 +169,7 @@ Create a new Conda environment for class
    
    .. code-block:: bash
 
-      <install-path>/miniconda3/envs/ChE150/bin/python``
+      <install-path>/miniconda3/envs/ChE150/bin/python
 
    This means that you are using a Python environment that is separate from the rest of your system!
 
