@@ -189,9 +189,19 @@ Create a new Conda environment for class
 6. You can open the directory in VS Code by starting VS Code and go to File -> Open Folder, and select the ``ChE150`` folder.
 
 
+Bonus: The Great ``exp`` Challenge
+----------------------------------
+
+If you have already completed the above steps, you can try your hands on managing the floating point errors in Python.
+
+In ``workshop_1/error.ipynb``, you will find a challenge to compute the value of ``exp(x)`` for large values of ``x``, such that the relative error 
+is on the order of machine precision. 
+
+Hint: you may find the following algorithm useful: `Horner's method`_
 
 .. _official website: https://code.visualstudio.com/
 .. _git website: https://git-scm.com/
 .. _GitHub: https://github.com/
 .. _GitHub Personal Access Token: https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic
 .. _conda website: https://www.anaconda.com/download
+.. _Horner's method: https://en.wikipedia.org/wiki/Horner%27s_method
