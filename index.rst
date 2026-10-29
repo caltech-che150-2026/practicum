@@ -17,7 +17,7 @@ documentation for details.
 
    1.setup
    2.github
+   3.performance
 
 .. Unreleased lessons (also excluded in conf.py); add back to the toctree above to publish:
-   3.performance
    4.debug
