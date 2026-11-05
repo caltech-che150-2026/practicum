@@ -118,7 +118,7 @@ For example, in ``reactor.py``:
 
 We gave fresh agents (Claude Code subagents) one of the two packages, three runs each, with two different prompts in ``prompt.md``.
 
-**Test 1: the HW3 problem.** Parts (a)–(d) of HW3 Problem 2, verbatim, with the instruction to use the package, compared to solutions.
+**Test 1: Verbatim HW3 Problem 2.** Parts (a)–(d) of HW3 Problem 2 with the instruction to use the package, compared to solutions.
 
 .. list-table::
    :header-rows: 1
@@ -139,8 +139,20 @@ We gave fresh agents (Claude Code subagents) one of the two packages, three runs
      - 2 runs wrote "units unknown"; 1 run labelled its plot **L mol\ :sup:`-1` min\ :sup:`-1` (wrong)**
      - L mol\ :sup:`-1` s\ :sup:`-1` in all runs
 
-**Test 2: questions that depend on units.** We asked for the outlet :math:`c_C` and the residence time (in minutes) for a 0.5 m\ :sup:`3` reactor at 40 °C,
-the volume corresponding to an optimizer result ``[cA0, cB0, v, T]``, and two activation energies, and asked the agent to list its assumptions.
+**Test 2: questions that depend on units.** 
+
+Prompt to Claude Opus 5.5:
+
+.. code-block:: text
+
+    A Python package `cstr` is in `<DIR>/cstr`. It models an isothermal CSTR with a five-reaction network (A + B -> C + D is the desired reaction). Use this package (import and call it; don't re-implement the model) to answer:
+
+    1. For an inlet feed of cA0 = 1.2 M and cB0 = 0.6 M, a 0.5 m^3 reactor, at 40 °C: what is the steady-state outlet concentration of C (in M)? What is the reactor residence time (in minutes)?
+    2. A labmate ran `cstr.design.run_multistart` and the best result had `result.x = [1.3515, 0.6485, 2.6802, 298.0]`. What reactor volume, in m^3, does this design correspond to?
+    3. What are the activation energies of reaction 1 and reaction 3, in kJ/mol?
+
+    Work only inside `<DIR>`. 
+    Final answer: the numbers with units, then one line for each assumption you had to make (or "none").
 
 .. list-table::
    :header-rows: 1
