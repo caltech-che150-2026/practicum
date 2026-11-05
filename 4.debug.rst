@@ -1,12 +1,12 @@
 Lesson 4: Debugging, readability and data management
 ==================================================
 
-In this workshop, we will learn about other ``good'' coding practices.
+In this workshop, we will learn about other "good" coding practices.
 
 Debugging
 ---------
 
-With the advent of coding agents, manual debugging is becoming less necessary. However, sometimes manual debuggin is still faster, and may
+With the advent of coding agents, manual debugging is becoming less necessary. However, sometimes manual debugging is still faster, and may
 allow you to understand what is going on.
 
 Most programming languages have a built-in debugger, which allows you to run your code step by step and inspect values of variables. 
@@ -89,7 +89,99 @@ Exercise
 --------
 1. Pull up your code from an undergraduate course written >6 months ago. (If you don't have any, you can use your HW1 submission.)
 2. See if you can understand every line.
-3. Trade with your neighbors. Suggest improvements to make each other's code more readable. 
+3. Trade with your neighbors. Suggest improvements to make each other's code more readable.
+
+
+Readability for coding agents
+-----------------------------
+
+It is tempting to think readability no longer matters, since an agent can read any code in seconds.
+But code only tells you *what is computed*. It cannot tell you *what the numbers mean*: units, the order
+of entries in an array, or whether a variable is ``V`` or ``log10(V)``. If that information is not written down,
+neither you nor the agent can recover it.
+
+We can test this with the CSTR design code from HW3 Problem 2.
+Please refer to ``practicum/workshop_4/docstring_demo``, which contains two copies of the same package ``cstr``:
+
+    - ``bare/``: the code with all docstrings and comments removed (including the ``# L/s`` comment in the original solution).
+    - ``documented/``: the **identical** code with short docstrings stating units, array orderings, and conventions.
+
+For example, in ``reactor.py``:
+
+.. code-block:: python
+
+    # bare/
+    q = 1.0
+
+    # documented/
+    q = 1.0  # volumetric flow rate [L/s]; residence time tau = V / q [s]
+
+We gave fresh agents (Claude Code subagents) one of the two packages, three runs each, with two different prompts in ``prompt.md``.
+
+**Test 1: the HW3 problem.** Parts (a)–(d) of HW3 Problem 2, verbatim, with the instruction to use the package, compared to solutions.
+
+.. list-table::
+   :header-rows: 1
+
+   * -
+     - Bare (3 runs)
+     - Documented (3 runs)
+   * - Tokens used (mean)
+     - 36.6k
+     - 39.1k
+   * - Wall time
+     - 2.3–6.0 min
+     - 2.1–4.8 min
+   * - :math:`A_i`, :math:`E_i`, optimal design, :math:`c_C^*`, active constraints
+     - all correct
+     - all correct
+   * - Units of :math:`A_i` and :math:`k_i`
+     - 2 runs wrote "units unknown"; 1 run labelled its plot **L mol\ :sup:`-1` min\ :sup:`-1` (wrong)**
+     - L mol\ :sup:`-1` s\ :sup:`-1` in all runs
+
+**Test 2: questions that depend on units.** We asked for the outlet :math:`c_C` and the residence time (in minutes) for a 0.5 m\ :sup:`3` reactor at 40 °C,
+the volume corresponding to an optimizer result ``[cA0, cB0, v, T]``, and two activation energies, and asked the agent to list its assumptions.
+
+.. list-table::
+   :header-rows: 1
+
+   * -
+     - Bare (3 runs)
+     - Documented (3 runs)
+   * - Tokens used (mean)
+     - 18.7k
+     - 20.1k
+   * - Wall time
+     - 22–26 s
+     - 16–17 s
+   * - :math:`c_C`, volume, activation energies
+     - all correct
+     - all correct
+   * - Residence time (correct: 8.33 min)
+     - **500 min in 3/3 runs** (assumed L/min)
+     - 8.33 min in 3/3 runs
+
+What we learned:
+
+    1. Docstrings did **not** save tokens or time in a meaningful way. The run-to-run variation was larger than any difference between the two versions.
+       The documented code is longer, so the agent reads *more*.
+    2. The agents were good at reading code. Without any docstrings, they all worked out that ``10.0**v`` means
+       logspace :math:`\log_{10} V`, that index 2 of the output is :math:`c_C`, and that :math:`T` is in K. On the actual homework problems, all numbers were correct.
+    3. What the agents could not do is recover information that is not in the code, here the time unit.
+       On the homework problems, most bare-code agents said the units were unknown, but one put a wrong unit on a plot without mentioning it.
+       When asked for a number, every bare-code agent assumed L/min and reported 500 min. They did list this as an assumption,
+       but the answer was still wrong, and it is easy to miss an assumption with heavy AI usage.
+    4. Wrong documentation is worse than none. Incorrect comments greatly hinder an LLM's understanding of code. Keep commnets, docstrings
+       up to date when you change the code.
+
+
+The bottom line: write docstrings for the things code cannot say (units, conventions, assumptions), not for things the code already says.
+Six runs per test is a small sample; your results will vary.
+
+Exercise
+--------
+1. Run the prompts in ``prompt.md`` with your coding agent on both ``bare/`` and ``documented/``. Did you reproduce the result? How many tokens did each run use?
+2. Without looking at ``documented/``, write docstrings for ``bare/cstr/reactor.py``. Which facts could you **not** determine from the code alone?
 
 
 Data Management
@@ -100,6 +192,44 @@ The settings (aka metadata) and result can be stored in a variety of formats, in
 For the simplest datasets, python package ``pandas`` is great for managing data. 
     - It can read and write data in a variety of formats, including CSV, Excel, and SQL databases.
     - You can use ``pandas`` to filter, sort, and group data.
+
+A common pattern is to save each run to its own file, and keep an **index** (or catalog): a single table with one row per run,
+listing every setting used for that run and the name of the file holding its result. To find a run, you filter the index instead of opening every file.
+
+Do coding agents manage data for you?
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+We gave fresh agents (Claude Code subagents) the enzyme kinetics notebook from ``practicum/workshop_4/sweep.ipynb``, with the
+cataloging code removed. Their task was to complete ``simulation`` and run the 10 × 10 sweep over temperature and enzyme concentration.
+We never mentioned an index, catalog, or metadata.
+
+.. list-table::
+   :header-rows: 1
+
+   * - Prompt
+     - Saved results to disk
+     - Wrote an index
+   * - "Run the sweep" (2 runs)
+     - 0/2 (results only in memory and in the notebook)
+     - 0/2
+   * - "... Save the results of every simulation run to disk." (6 runs)
+     - 6/6
+     - 3/6
+   * - "... Save the results of every simulation run to its own file on disk." (6 runs)
+     - 6/6
+     - 4/6
+
+What we learned:
+
+    1. Agents do what you ask, and not much more. If you don't ask them to save results, they don't.
+    2. Whether you get an index is a coin flip. The agents that skipped it put the parameters in the file names and inside each file,
+       so nothing was lost, but finding "all runs at 300 K" means opening 100 files instead of filtering one table.
+    3. **Indexes only recorded what was swept.** The notebook never specifies the simulation time, so each agent picked one: anywhere from 100 s
+       to 20 000 s. This choice changes the results completely. At 20 000 s every run reaches 100% conversion and the sweep shows nothing;
+       at 1000 s the slow runs are far from complete. Only 2 of the 7 indexes recorded the simulation time.
+       Six months from now, you would not know which one you used.
+    4. So ask for it explicitly, for example: *"Save each run to its own file, and write an index CSV with one row per run listing every
+       parameter (including simulation time and solver settings) and the file name."*
 
 Exercise
 --------
@@ -146,8 +276,6 @@ Exercise
    Now, considering that the rate constants would vary due to temperature, and the initial concentrations can be adjusted.
    
 
-
-Show: CLI, VSCode, Github website
 
 .. _official website: https://code.visualstudio.com/
 .. _git website: https://git-scm.com/
